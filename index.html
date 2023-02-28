@@ -1,0 +1,344 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+
+<style type="text/css">
+
+	.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+
+
+  /*width: 30vw; */
+}
+	
+	.search_box{
+
+		background:#Ececec;
+
+		width: 50vw;
+		/*padding:15px 20px; */
+		border-radius: 50%;
+		border:1px solid grey;
+ 	   /* text-align: center; */
+
+	    font-size:18px;
+
+	    flex-grow: 2;
+        border: none;
+        border-radius: 50px;
+
+        height:40px;
+
+        padding:2px 5px;
+
+        padding-left: 40px;
+
+
+
+
+	}
+
+	.search_box:focus {
+		border:1px solid grey;
+	}
+
+
+
+
+
+.hint-items {
+
+  position: absolute;
+
+  border: 1px solid #d4d4d4;
+
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background:white;
+
+  padding:10px;
+
+  border-radius: 40px;
+
+  padding:10px 20px;
+
+  /*border-bottom: none; */
+
+
+
+}
+.search_box_hint {
+  position: absolute;
+
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background:red;
+
+  padding:10px;
+
+  border-radius: 40px;
+
+
+
+/*  margin-left:30px;  */
+
+
+
+
+ }
+
+
+ .hint_area {
+ 	height:px;
+
+ 	width:50vw;
+
+ 	border-radius:40px;
+ 	background:red;
+ }
+
+
+
+.search_box_hint_input {
+	display:block;
+
+	color:white;
+
+	width: 100%;
+
+	padding:10px 20px;
+
+	/*border-radius:20px;*/
+	border:none;
+
+	color:#000;
+
+	font-weight:bold;
+
+	font-size:18px;
+
+}
+
+.search_box_hint_input{
+    border: none;
+    background-color: transparent;
+
+    text-align: inherit;
+ }
+
+  .search_box_hint_input:focus,
+  .search_box_hint_input:active {
+   box-shadow: none !important;
+   -moz-box-shadow: none !important;
+   -webkit-box-shadow: none !important;
+   outline: none !important;
+ }
+
+ .search_box_hint_input:hover {
+ 	background-color:#dedad9;
+ }
+
+</style>
+<body>
+<div>
+<div>
+
+	<h3>
+		this is the title
+	</h3>
+	
+</div>
+
+
+<form id="form_1">
+<div class="autocomplete" id="autocompleteForm" >
+
+	<input class="search_box" id="search_box_input" type="text" name="" placeholder="search value" value="">
+</div>
+
+</form>
+
+</div>
+
+
+<script type="text/javascript">
+
+
+
+
+
+	var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey"]
+
+
+	
+	const search = document.getElementById("search_box_input");
+
+   const form  = document.getElementById("autocompleteForm");
+
+
+
+	search.addEventListener("focus",function(event){
+
+		console.log("hello there")
+
+
+	a = document.createElement("DIV")
+
+	a.setAttribute("class","hint-items");
+
+
+	this.parentNode.appendChild(a)
+
+
+		for (let i = 0; i < 10; i++) {
+
+			console.log(i)
+           var  textfieldSelector = document.createElement("input");
+
+           textfieldSelector.type = "button";
+
+           textfieldSelector.value = `${countries[i]}`;
+
+           //textfieldSelector.classList.add("search_box_hint");
+
+           textfieldSelector.classList.add("search_box_hint_input");
+
+           textfieldSelector.addEventListener("click",function(event){
+
+           	console.log("clicked this country")
+
+           	search.value = countries[i]
+
+           	// remove child element
+
+           	let parent = document.getElementById("search_box_input").parentNode
+
+           	parent.removeChild(this.parentNode) 
+
+
+
+           	// handling errors
+
+           })
+
+           a.appendChild(textfieldSelector);
+          }
+
+    document.addEventListener('click', (event) => {
+  if (!event.target.matches('#autocompleteForm, #autocompleteForm *')) {
+
+
+  	const  collection = document.getElementsByClassName("hint-items");
+
+  	console.log(collection)
+
+  	if (collection.length >0){
+  		let parent = document.getElementById("search_box_input").parentNode
+
+  		parent.removeChild(collection[0])
+  	}
+
+
+  else {
+
+  	//ju
+  }
+
+  }
+}) 
+
+	})
+
+formElement = document.getElementById("form_1");
+
+formElement.addEventListener("keydown",(event)=>{
+
+	if (event.keyCode ===13){
+		console.log("hello")
+
+		console.log(search.value)
+
+		event.preventDefault();
+
+		if (search.value){
+
+		  dumpSearch(search.value)
+		}
+
+
+		//formElement.submit()
+	}
+})
+
+//push first piece of code to genenetwork today
+
+
+
+
+
+
+
+function retrieveSearchHistory(){
+let  results = JSON.parse(localStorage.getItem("gn_search_history"))
+return results ? results :[]
+
+}
+
+function dumpSearch(search_item){
+
+	// check if item already in array
+
+	//limit number of items that are already set
+
+
+
+	
+
+
+
+
+	let currentSearch =retrieveSearchHistory()
+	currentSearch.unshift(search_item)
+
+	console.log(currentSearch)
+
+	localStorage.setItem("gn_search_history", JSON.stringify(currentSearch));
+
+	return currentSearch
+
+
+
+
+}
+
+
+console.log(retrieveSearchHistory())
+
+
+
+
+
+
+
+</script>
+	
+</body>
+</html>
